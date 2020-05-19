@@ -7,44 +7,34 @@
     <body>
         <div top>
             <h3>차단</h3>
-            <input type="button" name="options" value="Options" onclick="location.href='options.html'" />
+            <input type="button" name="options" value="Options" onclick="window.open('options.html')" />
         </div>
         <hr>
         <form class="setting">
             <span data-message="temp">이 사이트 차단 일시 제외</span>
-            <label for="temp" class="label_onoff">
-                <span class="marble"></span>
-                <span class="on">on</span>
-                <span class="off">off</span>
-            </label>
-            <input type="checkbox" id="temp" name="temp" class="input_onoff">
+            <button type="button" id="temp" name="temp">적용</button>
         </form>
         <form class="setting">
             <span data-message="permanent">이 사이트 차단 영구 제외</span>
-            <label for="permanent" class="label_onoff">
-                <span class="marble"></span>
-                <span class="on">on</span>
-                <span class="off">off</span>
-            </label>
-            <input type="checkbox" id="permanent" name="permanent" class="input_onoff">
+            <button type="button" id="permanent" name="permanent">적용</button>
         </form>
         <form class="setting">
             <span data-message="blockdecision">본문 스포일러 판단</span>
+            <input type="checkbox" id="blockdecision" name="blockdecision" class="input_onoff">
             <label for="blockdecision" class="label_onoff">
                 <span class="marble"></span>
                 <span class="on">on</span>
                 <span class="off">off</span>
             </label>
-            <input type="checkbox" id="blockdecision" name="blockdecision" class="input_onoff">
         </form>
         <form class="setting">
             <span data-message="bodyblock">본문 전체 차단</span>
+            <input type="checkbox" id="bodyblock" name="bodyblock" class="input_onoff">
             <label for="bodyblock" class="label_onoff">
                 <span class="marble"></span>
                 <span class="on">on</span>
                 <span class="off">off</span>
             </label>
-            <input type="checkbox" id="bodyblock" name="bodyblock" class="input_onoff">
         </form>
     </body>
 </html>
