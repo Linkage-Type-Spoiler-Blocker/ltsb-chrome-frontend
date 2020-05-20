@@ -30,7 +30,7 @@ input[type="checkbox"] {
       transition: all .3s;
       font-size: 14px;
   }
-  .label_onoff.marble {
+  .label_onoff .marble {
       position: absolute;
       top: 1px;
       left: 1px;
@@ -45,11 +45,11 @@ input[type="checkbox"] {
       -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
       box-shadow: 0 0 10px rgba(0, 0, 0, .3);
   }
-  .label_onoff.on {
+  .label_onoff .on {
       display: none;
       padding-left: 12px;
   }
-  .label_onoff.off {
+  .label_onoff .off {
       padding-left: 30px;
       line-height: 25px;
   }

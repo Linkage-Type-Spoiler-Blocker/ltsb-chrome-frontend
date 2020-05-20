@@ -1,4 +1,11 @@
 .right-box {
     background: blue;
     float: right;
-  }
+}
+.btn {
+  border: 1px solid #7ea9e2;
+  background-color: #7ea9e2;
+  color: #fff;
+  padding: 5px;
+  border-radius: 15px;
+}
