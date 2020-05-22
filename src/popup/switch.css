@@ -1,0 +1,67 @@
+input[type="checkbox"] {
+    display: none;
+  }
+  
+  .label_onoff {
+      overflow: hidden;
+      position: relative;
+      display: inline-block;
+      width: 58px;
+      height: 26px;
+      -webkit-border-radius: 13px;
+      -moz-border-radius: 13px;
+      border-radius: 13px;
+      background-color: #ed4956;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -ms-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s;
+  }
+  .label_onoff > * {
+      vertical-align: sub;
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -ms-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s;
+      font-size: 14px;
+  }
+  .label_onoff .marble {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      display: block;
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+      box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+  }
+  .label_onoff .on {
+      display: none;
+      padding-left: 12px;
+  }
+  .label_onoff .off {
+      padding-left: 30px;
+      line-height: 25px;
+  }
+  .input_onoff:checked + .label_onoff {
+      background-color: #0bba82;
+  }
+  .input_onoff:checked + .label_onoff .on {
+      display: inline-block;
+  }
+  .input_onoff:checked + .label_on-ff .off {
+      display: none;
+  }
+  .input_onoff:checked + .label_onoff .marble {
+      left: 33px;
+  }

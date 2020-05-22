@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="switch.css" />
+        <link rel="stylesheet" type="text/css" href="basic.css" />
+    </head>
+    <body>
+        <div top>
+            <h3>차단</h3>
+            <input type="button" class="btn" name="options" value="Options" onclick="window.open('options.html')" />
+        </div>
+        <hr>
+        <form class="setting">
+            <span data-message="temp">이 사이트 차단 일시 제외</span>
+            <button class="btn" name="temp">적용</button>
+        </form>
+        <form class="setting">
+            <span data-message="permanent">이 사이트 차단 영구 제외</span>
+            <button class="btn" name="permanent">적용</button>
+        </form>
+        <form class="setting">
+            <span data-message="blockdecision">본문 스포일러 판단</span>
+            <input type="checkbox" id="blockdecision" name="blockdecision" class="input_onoff">
+            <label for="blockdecision" class="label_onoff">
+                <span class="marble"></span>
+                <span class="on">on</span>
+                <span class="off">off</span>
+            </label>
+        </form>
+        <form class="setting">
+            <span data-message="bodyblock">본문 전체 차단</span>
+            <input type="checkbox" id="bodyblock" name="bodyblock" class="input_onoff">
+            <label for="bodyblock" class="label_onoff">
+                <span class="marble"></span>
+                <span class="on">on</span>
+                <span class="off">off</span>
+            </label>
+        </form>
+    </body>
+</html>
