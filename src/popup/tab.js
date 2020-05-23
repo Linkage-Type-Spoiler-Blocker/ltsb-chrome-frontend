@@ -6,3 +6,11 @@ $(document).on('click','.tab_menu_btn',function(){
   $('.tab_box').hide();
   $('.tab_box').eq(idx).show();
 });
+
+$(document).on('click','#signup_btn',function(){
+  location.href = "signup.html";
+});
+
+$(document).on('click','#login_btn',function(){
+  location.href = "login.html";
+});

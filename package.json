@@ -1,0 +1,26 @@
+{
+  "name": "ltsb-chrome-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junhabaek/ltsb-chrome-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/junhabaek/ltsb-chrome-frontend/issues"
+  },
+  "homepage": "https://github.com/junhabaek/ltsb-chrome-frontend#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-modules-commonjs": "^7.9.6",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1"
+  }
+}

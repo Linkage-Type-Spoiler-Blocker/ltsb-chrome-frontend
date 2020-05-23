@@ -1,0 +1,38 @@
+{
+
+  "manifest_version": 2,
+  "name" :  "Linkage Type Spoiler Blocker",
+  "short_name" : "LT Spoiler Blocker",
+  "version" : "1.0",
+  "description": "뭐라 쓸건지 논의 필요",
+  "author": "JunhaBaek, SejiPark, JungeunChoi",
+  "homepage_url" : "https://github.com/Linkage-Type-Spoiler-Blocker/ltsb-chrome-frontend",
+  "minimum_chrome_version" :"61",
+  "icons": {
+    "16" : "images/red_panda_16.png",
+    "48" : "images/red_panda_48.png",
+    "128" : "images/red_panda_128.png"
+  },
+  "browser_action" : {
+    "default_icon": {
+      "16": "images/red_panda_16.png",
+      "48": "images/red_panda_48.png",
+      "128" : "images/red_panda_128.png"
+    },
+    "default_title": "LTSB",
+    "default_popup": "popup/main.html"
+  },
+  "background" : {
+    "scripts": ["core/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches" : ["http://*/*"],
+      "js" : ["core/content_script.js"]
+    }
+  ],
+  "options_page" : "popup/options.html",
+  "permissions" : ["storage"],
+  "web_accessible_resources" : []
+}
