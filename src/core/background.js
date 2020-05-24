@@ -1,3 +1,5 @@
+var userOptionObj;
+
 function makeStorageStructure() {
     chrome.storage.sync.set({
         "excludedSites" : [],
@@ -7,7 +9,7 @@ function makeStorageStructure() {
         "userWordsToBeBlocked" : [],
         "moviesToBeBlocked" : [],
         "isStorageEnabled" : true
-    });
+    },loadUserOptions());
 }
 
 chrome.runtime.onInstalled.addListener(function(){
@@ -20,3 +22,13 @@ chrome.runtime.onInstalled.addListener(function(){
         }
     })
 });
+
+(function(){
+    loadUserOptions()
+})();
+
+function loadUserOptions(){
+    chrome.storage.sync.get(null,function(items){
+        userOptionObj = items;
+    })
+}
