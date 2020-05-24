@@ -32,3 +32,22 @@ function loadUserOptions(){
         userOptionObj = items;
     })
 }
+
+function sendOptionsToMsgSender(sendResponse) {
+    sendResponse(userOptionObj);
+}
+
+function setOptionsFromMsgSenders(request) {
+    chrome.storage.sync.set(request.target_obj, loadUserOptions());
+}
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if(request.msg_type == "get"){
+            sendOptionsToMsgSender(sendResponse);
+        }
+        if(request.msg_type == "set"){
+            setOptionsFromMsgSenders(request);
+        }
+    }
+);
