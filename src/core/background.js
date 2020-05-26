@@ -37,17 +37,22 @@ function sendOptionsToMsgSender(sendResponse) {
     sendResponse(userOptionObj);
 }
 
-function setOptionsFromMsgSenders(request) {
+function setOptionsFromMsgSenders(request, sendResponse) {
     chrome.storage.sync.set(request.target_obj, loadUserOptions());
+    sendResponse({result : true});
 }
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        // console.log("get message");
         if(request.msg_type == "get"){
             sendOptionsToMsgSender(sendResponse);
+            // console.log("get");
         }
         if(request.msg_type == "set"){
-            setOptionsFromMsgSenders(request);
+            setOptionsFromMsgSenders(request, sendResponse);
+            // console.log("set");
         }
     }
 );
+
