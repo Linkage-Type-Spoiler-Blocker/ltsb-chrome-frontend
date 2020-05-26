@@ -34,5 +34,5 @@
   ],
   "options_page" : "popup/options.html",
   "permissions" : ["storage"],
-  "web_accessible_resources" : []
+  "web_accessible_resources" : ["/core/content_scripts/*.js"]
 }
