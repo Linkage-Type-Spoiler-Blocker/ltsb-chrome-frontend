@@ -10,9 +10,12 @@ function loadOptions(){
 }
 
 function loadURL(){
-    chrome.tabs.query({active: true, currentWindow : true}, tabs => {
-        cur_url = tabs[0].url;
-    });
+    // background에 재정의하고, background에 요청하는 기능으로 바꾸기
+    // chrome.tabs.query({active: true, currentWindow : true}, tabs => {
+    //     cur_url = tabs[0].url;
+    // });
+    cur_url = location.href;
+    console.log(cur_url);
 }
 
 //실제로는 main.html과 options.html에 정의되어야 할 message전송 기능.
