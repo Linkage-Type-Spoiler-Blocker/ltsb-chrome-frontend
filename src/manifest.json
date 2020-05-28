@@ -33,6 +33,6 @@
     }
   ],
   "options_page" : "popup/options.html",
-  "permissions" : ["storage"],
-  "web_accessible_resources" : []
+  "permissions" : ["storage", "tabs"],
+  "web_accessible_resources" : ["/core/content_scripts/*.js"]
 }
