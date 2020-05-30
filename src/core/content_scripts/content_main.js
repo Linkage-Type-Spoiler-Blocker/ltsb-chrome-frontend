@@ -31,9 +31,16 @@ function isBlockingEnabled(){
     }
 }
 
-function isExcludedSites(){
-    //TODO 임시제외사이트 뿐만아니라 영구제외사이트도 같이 판단해야함.
-    if(userOptions.temp_excluded_sites.includes(cur_url)){
+function isMatchedToRegex(regex, targetURL){
+    let re = new RegExp(regex);
+    let result = re.test(targetURL);
+    console.log(result)
+    return result;
+}
+
+function isExcludedSites(firstRegexes, secondRegexes, targetURL){
+    if(firstRegexes.some(curRegex=>isMatchedToRegex(curRegex, targetURL))||
+        secondRegexes.some(curRegex=>isMatchedToRegex(curRegex, targetURL))){
         return true;
     }
     else{
@@ -46,8 +53,14 @@ export function main(){
     //기본적으로 자바스크립트 함수가 동기인가? 비동기인가? 함수앞에 명시해야할때가 언제?
     loadOptions();
     loadURL();
-    let fullText = extractFullText();
-    console.log(fullText);
+    if(isExcludedSites(userOptions.excludedSites, userOptions.temp_excluded_sites, cur_url)){
+        return;
+    }
+    else{
+        let fullText = extractFullText();
+        console.log(fullText);
+    }
+
 }
 
 
