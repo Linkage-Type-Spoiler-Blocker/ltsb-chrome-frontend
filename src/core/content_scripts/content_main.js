@@ -4,10 +4,11 @@ import {extractFullText} from "./statement_extractor.js";
 var userOptions;
 var cur_url;
 
-function loadOptions(){
+function loadOptions(callback){
     chrome.runtime.sendMessage({msg_type : "get"}, function(response) {
         userOptions = response;
         // console.log(response);
+        callback();
     });
 }
 
@@ -49,18 +50,18 @@ function isExcludedSites(firstRegexes, secondRegexes, targetURL){
 }
 
 export function main(){
-    // TODO 비동기랑 동기가 섞여있음에 유의할것.
+    // TODO 비동기랑 동기가 섞여있음에 유의할것. 적어도 load options 후에 다른것들이 수행되어야 할거같은데?
     //기본적으로 자바스크립트 함수가 동기인가? 비동기인가? 함수앞에 명시해야할때가 언제?
-    loadOptions();
-    loadURL();
-    if(isExcludedSites(userOptions.excludedSites, userOptions.temp_excluded_sites, cur_url)){
-        return;
-    }
-    else{
-        let fullText = extractFullText();
-        console.log(fullText);
-    }
-
+    loadOptions(()=>{
+        loadURL();
+        if(isExcludedSites(userOptions.excludedSites, userOptions.temp_excluded_sites, cur_url)){
+            return;
+        }
+        else{
+            let fullText = extractFullText();
+            console.log(fullText);
+        }
+    });
 }
 
 
