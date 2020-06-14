@@ -16,6 +16,12 @@ function domain_from_url(url) {
     return result
 }
 
+function applyConfig(configKey, configValue){
+    //TODO popup에서도 설정 저장하고 있어야 한다
+    chrome.runtime.sendMessage({msg_type : "set", target_obj : {[configKey] : configValue}},
+        function(response) {console.log(response);});
+}
+
 $(document).ready(function(){
 
     const modal = $('#exclude-modal');
@@ -32,9 +38,9 @@ $(document).ready(function(){
         modal.css('display','none');
         const targetAddr = caller.attr(attrName);
         console.log(targetAddr);
-        //TODO popup에서도 설정 저장하고 있어야 한다. 현재 통째로 전달해주는 방식 사용.
-        // chrome.runtime.sendMessage({msg_type : "set", target_obj : {temp_excluded_sites : ""}},
-        //     function(response) {console.log(response);});
+
+        // TODO 제대로 주소 채워넣기. 통채로 전달하는 방식임.
+        applyConfig(excludeLifeSpan,);
 
         alert.css('display','block');
     }
@@ -67,8 +73,6 @@ $(document).ready(function(){
         modal.css('display','none');
     });
 
-    //TODO excludeLifeSpan은 modal에 data로 넣어두자.
-
     currentBtn.click(function(){
         handleChooseExcludeRangeBtn($(this),"data-cur");
     });
@@ -80,6 +84,31 @@ $(document).ready(function(){
         alert.css('display','none');
     });
 
+    $("#blockdecision").change(function(){
+        let isBlockingEnabled;
+        if($(this).is(":checked")){
+            console.log("체크");
+            isBlockingEnabled = true;
+        }
+        else{
+            console.log("체크 해제");
+            isBlockingEnabled = false;
+        }
+        applyConfig("isBlockingEnabled",isBlockingEnabled);
+    });
+
+    $("#bodyblock").change(function(){
+        let doesBlockAllContents;
+        if($(this).is(":checked")){
+            console.log("체크");
+            doesBlockAllContents = true;
+        }
+        else{
+            console.log("체크 해제");
+            doesBlockAllContents = false;
+        }
+        applyConfig("doesBlockAllContents",doesBlockAllContents);
+    });
 });
 
 
