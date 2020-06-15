@@ -30,6 +30,14 @@ function applyConfig(configKey, configValue){
         function(response) {console.log(response);});
 }
 
+function getCurrentURL(){
+    return new Promise((resolve,reject)=>{
+        chrome.tabs.query({currentWindow : true, active: true}, function(tabs){
+            resolve(tabs[0].url);
+        });
+    });
+}
+
 loadOptions((userOption)=> {
     $(document).ready(function () {
 
@@ -61,18 +69,18 @@ loadOptions((userOption)=> {
             alert.css('display', 'block');
         }
 
-        function handleExcludeBtn(excludeLifeSpan) {
+        async function handleExcludeBtn(excludeLifeSpan) {
             console.log('exclude btn clicked');
 
             modal.attr('data-lifespan', excludeLifeSpan);
 
-            const domainAddr = "도메인 : " + domain_from_url(location.href);
-            $('#domain-addr-paragraph').text(domainAddr);
-            domainBtn.attr('data-domain', domainAddr);
-
-            const curAddr = "현재 페이지 : " + location.href;
-            $('#cur-addr-paragraph').text(curAddr);
+            const curAddr = await getCurrentURL();
+            $('#cur-addr-paragraph').text("현재 페이지 : " +curAddr);
             currentBtn.attr('data-cur', curAddr);
+
+            const domainAddr = domain_from_url(curAddr);
+            $('#domain-addr-paragraph').text("도메인 : " + domainAddr);
+            domainBtn.attr('data-domain', domainAddr);
 
             modal.css('display', 'block');
         }
@@ -125,6 +133,5 @@ loadOptions((userOption)=> {
         });
     })
 });
-
 
 
