@@ -78,7 +78,7 @@ loadOptions((userOption)=> {
         }
 
         $("#temp-btn").click(function () {
-            handleExcludeBtn("temp_excluded_sites");
+            handleExcludeBtn("tempExcludedSites");
         });
 
         $("#permanent-btn").click(function () {

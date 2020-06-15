@@ -54,7 +54,7 @@ export function main(){
     //기본적으로 자바스크립트 함수가 동기인가? 비동기인가? 함수앞에 명시해야할때가 언제?
     loadOptions(()=>{
         loadURL();
-        if(isExcludedSites(userOptions.excludedSites, userOptions.temp_excluded_sites, cur_url)){
+        if(isExcludedSites(userOptions.excludedSites, userOptions.tempExcludedSites, cur_url)){
             return;
         }
         else{
