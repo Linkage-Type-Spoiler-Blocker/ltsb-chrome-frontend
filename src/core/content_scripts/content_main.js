@@ -15,11 +15,7 @@ function loadURL(){
     console.log(cur_url);
 }
 
-// TODO 실제로는 main.html과 options.html에 정의되어야 할 message전송 기능.
-function temp_set_options(){
-    chrome.runtime.sendMessage({msg_type : "set", target_obj : {isBlockingEnabled : true}},
-        function(response) {console.log(response);});
-}
+
 
 function isBlockingEnabled(){
     if(userOptions.isBlockingEnabled == true) {
