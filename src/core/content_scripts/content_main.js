@@ -65,4 +65,107 @@ export function main(){
     });
 }
 
+//TODO 여기부터가 차단 코드
 
+
+let cachedTerms = ["어벤져스"];
+const elementsWithTextContentToSearch = "a, p, h1, h2, h3, h4, h5, h6";
+const containerElements = "span, div, li, th, td, dt, dd";
+
+window.addEventListener('DOMContentLoaded', function () {
+    enableMutationObserver();
+
+    blockSpoilerContent(document, result.spoilerterms, "[스포일러 포함]");
+});
+
+function blockSpoilerContent(rootNode, spoilerTerms, blockText) {
+    let nodes = rootNode.querySelectorAll(elementsWithTextContentToSearch)
+    replacenodesWithMatchingText(nodes, spoilerTerms, blockText);
+
+    nodes = findContainersWithTextInside(rootNode);
+    if (nodes && nodes.length !== 0) {
+        replacenodesWithMatchingText(nodes, spoilerTerms, blockText);
+    }
+}
+
+function replacenodesWithMatchingText(nodes, spoilerTerms, replaceString) {
+    nodes = Array.from(nodes);
+    nodes.reverse();
+    for (const node of nodes) {
+        for (const spoilerTerm of spoilerTerms) {
+            if (compareForSpoiler(node, spoilerTerm)) {
+                if (!node.parentNode || node.parentNode.nodeName === "BODY") {
+                    continue;
+                }
+                node.className += " hidden-spoiler";
+                node.textContent = replaceString;
+                blurNearestChildrenImages(node);
+            }
+        }
+    }
+}
+
+function compareForSpoiler(nodeToCheck, spoilerTerm) {
+    const regex = new RegExp(spoilerTerm, "i");
+    return regex.test(nodeToCheck.textContent);
+}
+
+function blurNearestChildrenImages(nodeToCheck) {
+    let nextParent = nodeToCheck;
+    let childImages;
+    const maxIterations = 3;
+    let iterationCount = 0;
+    do {
+        nextParent = nextParent.parentNode;
+        if (nextParent && nextParent.nodeName !== "BODY") {
+            childImages = nextParent.parentNode.querySelectorAll('img');
+        }
+        iterationCount++;
+    } while (nextParent && childImages.length === 0 && iterationCount < maxIterations)
+
+    if (childImages && childImages.length > 0) {
+        for (const image of childImages) {
+            image.className += " blacked-out";
+        }
+    }
+}
+
+function findContainersWithTextInside(targetNode) {
+    const containerNodes = targetNode.querySelectorAll(containerElements);
+    const emptyNodes = [];
+    for (const containerNode of containerNodes) {
+        const containerChildren = containerNode.childNodes;
+        for (const containerChild of containerChildren) {
+            if (containerChild.textContent) {
+                emptyNodes.push(containerChild.parentNode);
+            }
+        }
+    }
+    return emptyNodes;
+}
+
+function applyBlurCSSToMatchingImages(nodes, spoilerTerms) {
+    for (const node of nodes) {
+        for (const spoilerTerm of spoilerTerms) {
+            const regex = new RegExp(spoilerTerm, "i");
+            if (regex.test(node.title) || regex.test(node.alt ||
+                regex.test(node.src) || regex.test(node.name))) {
+                node.className += " blurred";
+                node.parentNode.style.overflow = "hidden";
+            }
+        }
+    }
+}
+
+function enableMutationObserver() {
+    MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+    const observer = new MutationObserver((mutations, observer) => {
+        for (const mutation of mutations) {
+            blockSpoilerContent(mutation.target, cachedTerms, "[스포일러 포함]");
+        }
+    });
+
+    const config = { attributes: true, subtree: true }
+    observer.observe(document, config);
+}
