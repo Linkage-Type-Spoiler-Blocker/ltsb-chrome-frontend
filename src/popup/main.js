@@ -40,6 +40,7 @@ function getCurrentURL(){
 
 loadOptions((userOption)=> {
     $(document).ready(function () {
+        // chrome.runtime.sendMessage({msg_type : "set_words", target_obj : { movie_id : 475557, title : "Joker"}}, function(response) { console.log(response); });
 
         const modal = $('#exclude-modal');
 

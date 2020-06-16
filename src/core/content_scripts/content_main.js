@@ -5,11 +5,7 @@ var userOptions;
 var cur_url;
 
 function loadOptions(callback){
-    chrome.runtime.sendMessage({msg_type : "get"}, function(response) {
-        userOptions = response;
-        // console.log(response);
-        callback();
-    });
+    chrome.runtime.sendMessage({msg_type : "get"}, callback);
 }
 
 function loadURL(){
@@ -52,9 +48,11 @@ function isExcludedSites(firstRegexes, secondRegexes, targetURL){
 export function main(){
     // TODO 비동기랑 동기가 섞여있음에 유의할것. 적어도 load options 후에 다른것들이 수행되어야 할거같은데?
     //기본적으로 자바스크립트 함수가 동기인가? 비동기인가? 함수앞에 명시해야할때가 언제?
-    loadOptions(()=>{
+    loadOptions((resUserOption)=>{
+        userOptions = resUserOption;
         loadURL();
         if(isExcludedSites(userOptions.excludedSites, userOptions.tempExcludedSites, cur_url)){
+            console.log("제외사이트");
             return;
         }
         else{
