@@ -27,3 +27,44 @@ button {
 .tab_box.on {
     display: block;
 }
+#word-table{
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+#word-table th, #word-table td {
+    text-align: left;
+    padding: 12px;
+}
+
+#word-table tr {
+    border-bottom: 1px solid #ddd;
+}
+
+#word-table tr.header, #word-table tr:hover {
+    background-color: #f1f1f1;
+}
+#word-input {
+    background-image: url('../images/searchglass.jpeg');
+    background-size: 12px;
+    background-position: 10px 8px;
+    background-repeat: no-repeat;
+    width: 40%;
+    font-size: 11px;
+    padding: 8px 10px 8px 30px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+#delete-btn{
+    padding: 3px;
+    margin: 2px;
+    font-size : 12px;
+}
+
+#add-btn{
+    padding: 3px;
+    margin: 2px;
+    font-size : 12px;
+}
