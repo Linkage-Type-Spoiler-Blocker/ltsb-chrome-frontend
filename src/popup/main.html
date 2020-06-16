@@ -13,14 +13,23 @@
             <input type="button" class="btn" name="options" value="Options" id="options_btn" />
         </div>
         <hr>
-        <form class="setting">
-            <span data-message="temp">이 사이트 차단 일시 제외</span>
-            <button class="btn" name="temp">적용</button>
-        </form>
-        <form class="setting">
-            <span data-message="permanent">이 사이트 차단 영구 제외</span>
-            <button class="btn" name="permanent">적용</button>
-        </form>
+
+        <!-- 새로고침 안내 -->
+        <div class="alert">
+            <span class="alert-close-btn" >&times;</span>
+            제외사이트 설정 후, 새로고침을 해주세요.
+        </div>
+
+        <!-- 일시 차단 제외 버튼 -->
+        <span data-message="temp">이 사이트 차단 일시 제외</span>
+        <button class="btn" name="temp" id="temp-btn">적용</button>
+        <br>
+
+        <!-- 영구 차단 제외 버튼 -->
+        <span data-message="permanent">이 사이트 차단 영구 제외</span>
+        <button class="btn" name="permanent" id="permanent-btn">적용</button>
+
+        <!-- 본문 스포일러 판단 여부 -->
         <form class="setting">
             <span data-message="blockdecision">본문 스포일러 판단</span>
             <input type="checkbox" id="blockdecision" name="blockdecision" class="input_onoff">
@@ -30,6 +39,8 @@
                 <span class="off">off</span>
             </label>
         </form>
+
+        <!-- 전체 차단 여부 -->
         <form class="setting">
             <span data-message="bodyblock">본문 전체 차단</span>
             <input type="checkbox" id="bodyblock" name="bodyblock" class="input_onoff">
@@ -39,5 +50,18 @@
                 <span class="off">off</span>
             </label>
         </form>
+
+        <!-- 차단 범위 선택용 대화상자 -->
+        <div id="exclude-modal" class = "modal" data-lifespan="">
+            <div class="modal-content">
+                <span class="close" id="close-exclude-modal">&times;</span> <!-- 닫기 버튼을 곱하기 기호 텍스트로 표현한듯. -->
+                <p>차단 범위를 결정해주세요.</p>
+                <br>
+                <p id="domain-addr-paragraph"></p>
+                <p id="cur-addr-paragraph"></p>
+                <button class = "btn" id="domain-btn" data-domain="abc">현재 도메인</button>
+                <button class = "btn" id="current-btn" data-cur="def">현재 페이지</button>
+            </div>
+        </div>
     </body>
 </html>

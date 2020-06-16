@@ -17,23 +17,46 @@
             <div class="tab_menu_container">
                 <div class="tab_box on">
                     <form>
-                        <label for="word"></label><input type="text" name="word" id="word" placeholder="Jhon Snow" />
-                        <input type="submit" class="btn" value="Search">
-                        <input type="submit" class="btn" value="Add">
+                        <input type="text" class="ltsb-input" id="word-input" placeholder="John Snow" value="">
+
+                        <input type="button" class="btn" value="Add" id="add-word-btn">
+                        <input type="button" class="btn" value="Delete" id="delete-word-btn">
                     </form>
+                    <table class="ltsb-table" id="word-table">
+                        <tr class="tbl-header">
+                            <th style="width:15%;">Check</th>
+                            <th style="width:85%;">Words</th>
+                        </tr>
+
+
+                    </table>
                 </div>
                 <div class="tab_box">
                     <div style="float:left;">등록된 영화
                         <form>
-                            <label for="registered"><input type="text" name="movie" id="registered" /></label>
-                            <input type="submit" class="btn" value="Search">
+                            <input type="text" class="ltsb-input" id="cur-movie-input" />
+                            <input type="button" class="btn" value="Delete" id="delete-movie-btn">
                         </form>
+                        <table class="ltsb-table" id="cur-movie-table">
+                            <tr class="tbl-header">
+                                <th style="width:15%;">Check</th>
+                                <th style="width:85%;">Movies</th>
+                            </tr>
+                        </table>
                     </div>
                     <div style="float:left;">추가할 영화 검색
                         <form>
-                            <label for="adding"><input type="text" name="movie" id="adding" placeholder="Avengers" /></label>
-                            <input type="submit" class="btn" value="Search">
+                            <input type="text" class="ltsb-input" id="new-movie-input" placeholder="Avengers" />
+                            <input type="button" class="btn" value="Search" id="search-movie-btn">
                         </form>
+                        <table class="ltsb-table" id="new-movie-table">
+                            <tr class="tbl-header">
+                                <th style="width:40%;">Movie</th>
+                                <th style="width:40%;">Director</th>
+                                <th style="width:10%;">Year</th>
+                                <th style="width:10%";>Add</th>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <div class="tab_box">

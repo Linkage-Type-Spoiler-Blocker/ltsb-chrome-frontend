@@ -28,11 +28,13 @@
   },
   "content_scripts": [
     {
+      "run_at" : "document_start",
+      "all_frames" : true,
       "matches" : ["http://*/*","https://*/*"],
       "js" : ["core/content_script.js"]
     }
   ],
   "options_page" : "popup/options.html",
-  "permissions" : ["storage", "tabs"],
+  "permissions" : ["storage", "tabs","activeTab"],
   "web_accessible_resources" : ["/core/content_scripts/*.js"]
 }
