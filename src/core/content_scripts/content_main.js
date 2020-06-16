@@ -3,8 +3,10 @@ import {extractFullText} from "./statement_extractor.js";
 
 var userOptions;
 var cur_url;
+var wordsPerMovie;
 
 function loadOptions(callback){
+    //TODO 단어도 불러오려면 둘중 하나는 기다려야함.
     chrome.runtime.sendMessage({msg_type : "get"}, callback);
 }
 
@@ -56,8 +58,13 @@ export function main(){
             return;
         }
         else{
-            let fullText = extractFullText();
-            console.log(fullText);
+            chrome.runtime.sendMessage({msg_type : "get_words"}, (words)=>{
+                wordsPerMovie = words;
+                console.log(userOptions);
+                console.log(wordsPerMovie);
+                let fullText = extractFullText();
+                console.log(fullText);
+            });
         }
     });
 }
