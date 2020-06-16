@@ -17,12 +17,12 @@
             <div class="tab_menu_container">
                 <div class="tab_box on">
                     <form>
-                        <input type="text" id="word-input" placeholder="John Snow" value="">
+                        <input type="text" class="ltsb-input" id="word-input" placeholder="John Snow" value="">
 
-                        <input type="button" class="btn" value="Add" id="add-btn">
-                        <input type="button" class="btn" value="Delete" id="delete-btn">
+                        <input type="button" class="btn" value="Add" id="add-word-btn">
+                        <input type="button" class="btn" value="Delete" id="delete-word-btn">
                     </form>
-                    <table id="word-table">
+                    <table class="ltsb-table" id="word-table">
                         <tr class="tbl-header">
                             <th style="width:15%;">Check</th>
                             <th style="width:85%;">Words</th>
@@ -34,9 +34,15 @@
                 <div class="tab_box">
                     <div style="float:left;">등록된 영화
                         <form>
-                            <label for="registered"><input type="text" name="movie" id="registered" /></label>
-                            <input type="submit" class="btn" value="Search">
+                            <input type="text" class="ltsb-input" id="cur-movie-input" />
+                            <input type="button" class="btn" value="Delete" id="delete-movie-btn">
                         </form>
+                        <table class="ltsb-table" id="cur-movie-table">
+                            <tr class="tbl-header">
+                                <th style="width:15%;">Check</th>
+                                <th style="width:85%;">Movies</th>
+                            </tr>
+                        </table>
                     </div>
                     <div style="float:left;">추가할 영화 검색
                         <form>

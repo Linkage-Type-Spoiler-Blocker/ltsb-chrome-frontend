@@ -27,25 +27,27 @@ button {
 .tab_box.on {
     display: block;
 }
-#word-table{
+
+
+.ltsb-table{
     border-collapse: collapse;
     width: 100%;
     border: 1px solid #ddd;
     font-size: 12px;
 }
-#word-table th, #word-table td {
+.ltsb-table th, .ltsb-table td {
     text-align: left;
     padding: 12px;
 }
 
-#word-table tr {
+.ltsb-table tr {
     border-bottom: 1px solid #ddd;
 }
 
-#word-table tr.header, #word-table tr:hover {
+.ltsb-table tr.header, .ltsb-table tr:hover {
     background-color: #f1f1f1;
 }
-#word-input {
+.ltsb-input {
     background-image: url('../images/searchglass.jpeg');
     background-size: 12px;
     background-position: 10px 8px;
@@ -57,13 +59,19 @@ button {
     margin-bottom: 10px;
 }
 
-#delete-btn{
+#delete-word-btn{
     padding: 3px;
     margin: 2px;
     font-size : 12px;
 }
 
-#add-btn{
+#add-word-btn{
+    padding: 3px;
+    margin: 2px;
+    font-size : 12px;
+}
+
+#delete-movie-btn{
     padding: 3px;
     margin: 2px;
     font-size : 12px;
