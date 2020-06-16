@@ -46,9 +46,17 @@
                     </div>
                     <div style="float:left;">추가할 영화 검색
                         <form>
-                            <label for="adding"><input type="text" name="movie" id="adding" placeholder="Avengers" /></label>
-                            <input type="submit" class="btn" value="Search">
+                            <input type="text" class="ltsb-input" id="new-movie-input" placeholder="Avengers" />
+                            <input type="button" class="btn" value="Search" id="search-movie-btn">
                         </form>
+                        <table class="ltsb-table" id="new-movie-table">
+                            <tr class="tbl-header">
+                                <th style="width:40%;">Movie</th>
+                                <th style="width:40%;">Director</th>
+                                <th style="width:10%;">Year</th>
+                                <th style="width:10%";>Add</th>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <div class="tab_box">

@@ -25,8 +25,31 @@ $(document).on('click','#login_btn',function(){
 
 function addWord(word){
   userWords.push(word);
-  // chrome.runtime.sendMessage({"msg_type" : "set","target_obj" : {"userWordsToBeBlocked" : userWords}},
-  //     (response)=>{console.log(response);});
+  chrome.runtime.sendMessage({"msg_type" : "set","target_obj" : {"userWordsToBeBlocked" : userWords}},
+      (response)=>{console.log(response);});
+}
+
+function requestMovieWords(movieObj){
+  chrome.runtime.sendMessage({msg_type : "set_words", target_obj : movieObj}, function(response) { console.log(response); });
+}
+
+//TODO 여기
+function addMovie(movieId, title){
+  const movieObject = {
+    "movie_id" : movieId,
+    "title" : title
+  }
+  requestMovieWords(movieObject);
+
+  moviesToBeBlocked.push(movieObject);
+
+  const curRow = curMovieTable.insertRow(1);
+  const chkBox = curRow.insertCell(0);
+  const text = curRow.insertCell(1);
+
+  chkBox.innerHTML ='<input type="checkbox" class="word-check">';
+  text.innerText = title;
+  curRow.dataset.movieId = movieId;
 }
 
 function fillWordTable(){
@@ -50,31 +73,34 @@ function fillCurMovieTable(){
   })
 }
 
+
+
 $(document).ready(()=>{
   var wordInput = document.getElementById("word-input");
   var curMovieInput = document.getElementById("cur-movie-input");
 
   wordTable = document.getElementById("word-table");
-  curMovieTable = document.getElementById("cur-movie-table")
+  curMovieTable = document.getElementById("cur-movie-table");
+  newMovieTable = document.getElementById("new-movie-table");
 
   fillWordTable();
   fillCurMovieTable();
 
   // TODO 이게 진짜 깔끔한 설정 불러오기 방식임. 마음이 편안해 아주.
-  //
-  // const optionPromise = new Promise((resolve,reject)=>{
-  //   chrome.runtime.sendMessage({msg_type : "get"}, (options)=>{
-  //     userOptions = options;
-  //     resolve(true);
-  //   });
-  // });
-  //
-  // optionPromise.then((result)=>{
-  //   userWords = userOptions.userWordsToBeBlocked;
-  //   moviesToBeBlocked = userOptions.moviesToBeBlocked;
-  //   // 단어 초기화 해주면 됨
-  //   fillWordTable();
-  // });
+
+  const optionPromise = new Promise((resolve,reject)=>{
+    chrome.runtime.sendMessage({msg_type : "get"}, (options)=>{
+      userOptions = options;
+      resolve(true);
+    });
+  });
+
+  optionPromise.then((result)=>{
+    userWords = userOptions.userWordsToBeBlocked;
+    moviesToBeBlocked = userOptions.moviesToBeBlocked;
+    // 단어 초기화 해주면 됨
+    fillWordTable();
+  });
 
   //나머지 부분은 그냥 핸들러 연결해주면 됨.
 
@@ -137,8 +163,8 @@ $(document).ready(()=>{
         $(tds).remove();
       }
     }
-    // chrome.runtime.sendMessage({"msg_type" : "set","target_obj" : {"userWordsToBeBlocked" : userWords}},
-    //     (response)=>{console.log(response);});
+    chrome.runtime.sendMessage({"msg_type" : "set","target_obj" : {"userWordsToBeBlocked" : userWords}},
+        (response)=>{console.log(response);});
   });
 
   $(document).on('keyup','#cur-movie-input',()=>{
@@ -196,9 +222,61 @@ $(document).ready(()=>{
       }
     }
     // TODO 원래라면 삭제할때도, local에 저장된 단어 삭제 필요하다.
-    // chrome.runtime.sendMessage({"msg_type" : "set","target_obj" : {"moviesToBeBlocked" : moviesToBeBlocked}},
-    //     (response)=>{console.log(response);});
+    chrome.runtime.sendMessage({"msg_type" : "set","target_obj" : {"moviesToBeBlocked" : moviesToBeBlocked}},
+        (response)=>{console.log(response);});
   });
 
+  //TODO 여기
+  $(document).on('click','#search-movie-btn',()=>{
+    const newMovieInput = document.getElementById("new-movie-input");
+    const curSearchTitle = newMovieInput.value.toUpperCase();
+
+    const requestAddr = `http://18.233.34.24:3000/movie/search?title=${curSearchTitle}`;
+
+    fetch(requestAddr,{
+      method : "GET",
+      header : {
+        'Accept': 'application/json',
+        'Content-Type' : 'application/json'
+      }
+    })
+    .then((response)=>{
+      console.log("receive request");
+      return response.json();
+    }).
+    then(resultJson=>{
+      const resultObj = resultJson.result;
+      console.log(resultObj);
+      if(resultObj.length>0){
+        resultObj.forEach((curMovie)=>{
+          const curRow = newMovieTable.insertRow(1);
+          const movieElement = curRow.insertCell(0);
+          const directorElement = curRow.insertCell(1);
+          const yearElement = curRow.insertCell(2);
+          const btnElement = curRow.insertCell(3);
+
+          movieElement.innerText = curMovie.movie_name;
+          directorElement.innerText = curMovie.director_name;
+          yearElement.innerText = curMovie.release_year;
+
+          const addBtn = document.createElement('input');
+          addBtn.type='button';
+          addBtn.value = 'add';
+          addBtn.classList.add("btn");
+          addBtn.dataset.movieId = curMovie.movie_id;
+          addBtn.dataset.title = curMovie.movie_name;
+
+          addBtn.addEventListener('click', function() {
+            addMovie(curMovie.movie_id,curMovie.movie_name);
+          }, false);
+
+          btnElement.appendChild(addBtn);
+        })
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    });
+  })
 });
 
