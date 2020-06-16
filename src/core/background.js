@@ -40,6 +40,7 @@ chrome.runtime.onInstalled.addListener(function(){
     });
     loadWordsPerMovie((items)=>{
         wordsPerMovie = items.wordsPerMovie;
+        loadWordsNotInLocalStorage();
     });
 })();
 
@@ -49,6 +50,11 @@ function loadUserOptions(callback){
 
 function loadWordsPerMovie(callback){
     chrome.storage.local.get("wordsPerMovie",callback);
+}
+
+//TODO request address 추출
+function getRequestAddr(movieId, title){
+    return `http://18.233.34.24:3000/movie/words?movie_id=${movieId}&title=${title}`;
 }
 
 // function sendOptionsToMsgSender(sendResponse) {
@@ -65,8 +71,36 @@ function setOptionsFromMsgSenders(options, sendResponse) {
     sendResponse({result : true});
 }
 
+//TODO 여기 작성중.
+function loadWordsNotInLocalStorage(){
+    const syncMovies = userOptionObj.moviesToBeBlocked;
+    const moviesToBeRequested = [];
+    if(syncMovies.length === 0){
+        return;
+    }
+    syncMovies.forEach(curMovieInSync =>{
+        const {movie_id} = curMovieInSync;
+        const isInSync = wordsPerMovie.some(curMovieInLocal=>{
+            if(movie_id === undefined){return true;}
+            return movie_id === curMovieInLocal.movie_id;
+        });
 
-function requestWordsToServer(reqAddress,isExistInSync,sendResponse){
+        if(isInSync === false){
+            moviesToBeRequested.push(curMovieInSync);
+        }
+    });
+    // const movieRequests = [];
+    moviesToBeRequested.forEach((curMovie)=>{
+        const reqAddress = getRequestAddr(curMovie.movie_id, curMovie.title);
+        requestWordsToServer(reqAddress,true, ()=>{});
+        // movieRequests.push(new Promise((resolve,reject)=>{
+        //
+        // }));
+    });
+}
+
+// callback은 sendResponse이거나 resolve이거나.
+function requestWordsToServer(reqAddress,isExistInSync,callback){
 
     fetch(reqAddress,{
         method : "GET",
@@ -82,18 +116,22 @@ function requestWordsToServer(reqAddress,isExistInSync,sendResponse){
     then(resultJson=>{
         console.log(resultJson);
         addMovieWords(resultJson,isExistInSync)
-        sendResponse("receive request");
+        callback("receive request");
     })
     .catch(error => {
         console.log(error)
-        sendResponse("error");
+        callback("error");
     });
 }
 
 function addMovieWords(resultObj,isExistInSync){
     const {movie_id,title,words} = resultObj;
     if(!isExistInSync){
-        userOptionObj.moviesToBeBlocked.push(movie_id);
+        const movieSync = {
+            "movie_id" : movie_id,
+            "title" : title
+        }
+        userOptionObj.moviesToBeBlocked.push(movieSync);
         chrome.storage.sync.set({"moviesToBeBlocked" : userOptionObj.moviesToBeBlocked},
             (error)=>{console.log(error);});
     }
@@ -135,7 +173,7 @@ chrome.runtime.onMessage.addListener(
                 }
             });
 
-            const reqAddress = `http://18.233.34.24:3000/movie/words?movie_id=${movie_id}&title=${title}`;
+            const reqAddress = getRequestAddr(movie_id,title);
             requestWordsToServer(reqAddress,false,sendResponse);
         }
         return true;
