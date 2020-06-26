@@ -1,6 +1,6 @@
 let userOptions;
-let userWords = ["dd","ee"];
-let moviesToBeBlocked = [{"movie_id":1234,"title":"Avengers"},{"movie_id":5678,"title":"Iron man"}];
+let userWords = [];
+let moviesToBeBlocked = [];
 
 let wordTable;
 let curMovieTable;
@@ -72,8 +72,6 @@ function fillCurMovieTable(){
     curRow.dataset.movieId = curMovie.movie_id;
   })
 }
-
-
 
 $(document).ready(()=>{
   var wordInput = document.getElementById("word-input");
