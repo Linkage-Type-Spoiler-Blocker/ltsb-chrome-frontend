@@ -2,6 +2,7 @@ var userOptionObj;
 // var temp_excluded_sites;
 var wordsPerMovie;
 
+// 이거 호출시키면 설정 flush 용도로도 쓸 수 잇음
 function makeStorageStructure() {
     chrome.storage.sync.set({
         "excludedSites" : [],
@@ -42,6 +43,7 @@ chrome.runtime.onInstalled.addListener(function(){
         wordsPerMovie = items.wordsPerMovie;
         loadWordsNotInLocalStorage();
     });
+    // makeStorageStructure()
 })();
 
 function loadUserOptions(callback){
@@ -175,6 +177,11 @@ chrome.runtime.onMessage.addListener(
 
             const reqAddress = getRequestAddr(movie_id,title);
             requestWordsToServer(reqAddress,false,sendResponse);
+        }
+        if(request.msg_type = "get_url"){
+            chrome.tabs.query({currentWindow : true, active: true}, function(tabs){
+                sendResponse(tabs[0].url);
+            });
         }
         return true;
     }
